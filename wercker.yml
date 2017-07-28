@@ -5,12 +5,17 @@ box:
 
 build:
   steps:
+    - npm-install
+deploy:
+  steps:
     - script:
         name: check
         code: |
-            java -version
-deploy:
-  steps:
+            npm --version
+            node --version
+            jq --version
+            curl --version
+            recode --version
     - internal/docker-push:
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
