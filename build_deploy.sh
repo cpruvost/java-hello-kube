@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export tag=$(docker build -t demo-springboot . | grep 'Successfully built' | tail -c 13)
+export tag=$(docker build -t cpruvost/demo-springboot:latest . | grep 'Successfully built' | tail -c 13)
 
 echo $tag
 
