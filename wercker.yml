@@ -5,7 +5,7 @@ box:
 
 build:
   steps:
-    - scripts:
+    - script:
         name: mvn install
         code: mvn install
     
