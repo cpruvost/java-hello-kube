@@ -9,4 +9,3 @@ COPY . /pipeline/source/
 RUN mvn install
 
 EXPOSE 8090
-ENTRYPOINT exec java -jar ./target/demo-0.0.1-SNAPSHOT.jar
