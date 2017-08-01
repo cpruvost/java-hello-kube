@@ -5,18 +5,16 @@ box:
 
 build:
   steps:
-    - npm-install
+    - scripts:
+        name: mvn install
+        code: mvn install
     
 deploy:
   steps:
     - script:
         name: check
         code: |
-            npm --version
-            node --version
-            jq --version
-            curl --version
-            recode --version
+            java -version
     - internal/docker-push:
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
