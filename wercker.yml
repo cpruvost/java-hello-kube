@@ -2,13 +2,13 @@ box:
     id: $DOCKER_REGISTRY/$IMAGE_NAME
     tag: $APP_TAG
     registry: https://registry.hub.docker.com
-    cmd: /bin/sh
 
 build:
   steps:
     - script:
         name: mvn install
-        code: mvn install
+        code: |
+          mvn install
     
 deploy:
   steps:
