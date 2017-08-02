@@ -13,6 +13,6 @@ public class Greeting {
 
 	@RequestMapping(value = "/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public @ResponseBody String greeting(@PathVariable(value = "name") String name) {
-		return "V2 : Hello " + name;
+		return "V3 : Hello " + name;
 	}
 }
