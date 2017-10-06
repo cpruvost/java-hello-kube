@@ -1,6 +1,9 @@
+#Old Docker File to build a minimal java 8 image
 #FROM alpine:3.6
 #RUN apk --update add openjdk8-jre
 #CMD ["/usr/bin/java", "-version"]
+
+#New docker File to build my microservice container
 FROM cpruvost/minimal-java8
 VOLUME /tmp
 RUN mkdir -p /home/myapp
