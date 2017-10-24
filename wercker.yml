@@ -6,9 +6,9 @@ box:
 build:
   steps:
     - script:
-        name: mvn install
+        name: mvn package
         code: |
-          mvn install
+          mvn clean package
     
 deploy:
   steps:
