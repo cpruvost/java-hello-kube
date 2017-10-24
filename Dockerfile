@@ -13,7 +13,7 @@
 #EXPOSE 8090
 
 #New docker File for werker
-FROM cpruvost/minimal-java8
+FROM cpruvost/minimal-java8mvn
 
 # Create app directory; same as Wercker default
 RUN mkdir -p /pipeline/source
