@@ -21,6 +21,6 @@ WORKDIR /pipeline/source
 
 # Bundle app source
 COPY . /pipeline/source/
-RUN mvn install
+RUN mvn clean package
 
 EXPOSE 8090
