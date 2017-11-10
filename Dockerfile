@@ -3,7 +3,7 @@
 #RUN apk --update add openjdk8-jre
 #CMD ["/usr/bin/java", "-version"]
 
-#New docker File to build my java microservice container for kubernetes
+#New docker File to build my java microservice container
 #FROM cpruvost/minimal-java8
 #VOLUME /tmp
 #RUN mkdir -p /home/myapp
