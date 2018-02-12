@@ -14,16 +14,16 @@
 
 #New docker File for werker
 FROM cpruvost/minimal-java8mvn
-RUN apk --update add curl
-RUN apk --update add recode
-RUN apk --update add jq
+#RUN apk --update add curl
+#RUN apk --update add recode
+#RUN apk --update add jq
 
 # Create app directory; same as Wercker default
-#RUN mkdir -p /pipeline/source
-#WORKDIR /pipeline/source
+RUN mkdir -p /pipeline/source
+WORKDIR /pipeline/source
 
 # Bundle app source
-#COPY . /pipeline/source/
-#RUN mvn clean package
+COPY . /pipeline/source/
+RUN mvn clean package
 
-#EXPOSE 8090
+EXPOSE 8090
