@@ -5,9 +5,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: rest-jscreditscore
+  name: java-hello-kube
   labels:
-    run: rest-jscreditscore
+    run: java-hello-kube
 spec:
   replicas: 1
   strategy:
@@ -18,12 +18,12 @@ spec:
   template:
     metadata:
       labels:
-        run: rest-jscreditscore
+        run: java-hello-kube
     spec:
       containers:
       - image: wcr.io/$WERCKER_APPLICATION_OWNER_NAME/$WERCKER_APPLICATION_NAME:$WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
         imagePullPolicy: Always
-        name: rest-jscreditscore
+        name: java-hello-kube
         ports:
         - containerPort: 8090
           protocol: TCP
@@ -34,10 +34,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rest-jscreditscore-svc
+  name: java-hello-kube-svc
 spec:
   selector:
-    run: rest-jscreditscore
+    run: java-hello-kube
   ports:
     - port: 8088
       targetPort: 8090
