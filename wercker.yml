@@ -1,7 +1,4 @@
-box:
-    id: $DOCKER_REGISTRY/$IMAGE_NAME
-    tag: $APP_TAG
-    registry: https://registry.hub.docker.com
+box: cpruvost/java-hello-kube
 
 build:
   steps:
