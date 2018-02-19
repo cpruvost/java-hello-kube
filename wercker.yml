@@ -16,6 +16,7 @@ push-to-releases:
     # Push to public docker repo Container Registry (CR)
     - internal/docker-push:
         tag: $WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
+        cmd: java -jar ./target/rest-example-0.2.0.jar
         
 deploy-to-oke:
   box:
