@@ -13,7 +13,7 @@ push-to-releases:
         name: check
         code: |
             java -version
-    # Push to the public docker repo Container Registry (CR)
+    # Push to the public docker Container Registry (CR)
     - internal/docker-push:
         tag: $WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
         cmd: java -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -jar ./target/rest-example-0.2.0.jar
