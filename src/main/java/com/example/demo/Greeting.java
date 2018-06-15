@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value="/greetings")
 public class Greeting {
 
+	//Service REST Demo
 	@RequestMapping(value = "/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public @ResponseBody String greeting(@PathVariable(value = "name") String name) {
 		return "Hello Oracle Code " + name;
