@@ -24,32 +24,64 @@ push-to-releases:
           repository: $DOCKER_REPO
           registry: https://iad.ocir.io/v2
  
-containers:
-- name: get-ip-server
-  image: ${DOCKER_REPO}:${WERCKER_GIT_COMMIT}
-  ports:
-  - name: get-ip-server
-    containerPort: 8080
-    protocol: TCP
-imagePullSecrets:
-- name:  ${OKE_IMAGESECRET} 
-          
+
 deploy-to-oke:
   box:
-        id: python:2.7
-       
+        id: alpine
+        cmd: /bin/sh
   steps:
     - bash-template
     
     - script:
-      name: Prepare Kubernetes files
-      code: |
-        mkdir $WERCKER_OUTPUT_DIR/kubernetes
-        mv kubernetes_*.yml $WERCKER_OUTPUT_DIR/kubernetes
+        name: "Visualise Kubernetes config"
+        code: cat kubernetes-deployment.yml
     
     - kubectl:
-      name: deploy to kubernetes
-      server: $OKE_MASTER
-      token: $OKE_TOKEN
-      insecure-skip-tls-verify: true
-      command: apply -f $WERCKER_OUTPUT_DIR/kubernetes/
+        name: delete namespace
+        server: $KUBERNETES_MASTER
+        token: $KUBERNETES_TOKEN
+        insecure-skip-tls-verify: true
+        command: delete namespace $WERCKER_APPLICATION_OWNER_NAME --ignore-not-found=true
+        
+    - script:
+        name: wait to delete namespace
+        code: sleep 30
+        
+    - kubectl:
+        name: create namespace    
+        server: $KUBERNETES_MASTER
+        token: $KUBERNETES_TOKEN
+        insecure-skip-tls-verify: true
+        command: create namespace $WERCKER_APPLICATION_OWNER_NAME
+        
+    - kubectl:
+        name: create OCR secret
+        server: $KUBERNETES_MASTER
+        token: $KUBERNETES_TOKEN
+        insecure-skip-tls-verify: true
+        command: create secret docker-registry wrelease --docker-server=iad.ocir.io --docker-username=$WERCKER_APPLICATION_OWNER_NAME --docker-password=$KUBERNETES_TOKEN --docker-email=${WERCKER_APPLICATION_OWNER_NAME}@mail.com --namespace=$WERCKER_APPLICATION_OWNER_NAME
+        
+    - kubectl:
+        name: create deplyoment
+        server: $KUBERNETES_MASTER
+        token: $KUBERNETES_TOKEN
+        insecure-skip-tls-verify: true
+        command: create -f $WERCKER_ROOT/kubernetes-deployment.yml --namespace=$WERCKER_APPLICATION_OWNER_NAME
+
+    - script:
+        name: "Visualise Ingress config"
+        code: cat ingress.yml
+
+    - kubectl:
+        name: create Ingress configuration
+        server: $KUBERNETES_MASTER
+        token: $KUBERNETES_TOKEN
+        insecure-skip-tls-verify: true
+        command: create -f $WERCKER_ROOT/ingress.yml --namespace=$WERCKER_APPLICATION_OWNER_NAME
+
+    - kubectl:
+        name: get LoadBalancer public IP address
+        server: $KUBERNETES_MASTER
+        token: $KUBERNETES_TOKEN
+        insecure-skip-tls-verify: true
+        command: get svc -o jsonpath='{.items[*].status.loadBalancer.ingress[*].ip}' --all-namespaces 
