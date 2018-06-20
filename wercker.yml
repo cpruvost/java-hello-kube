@@ -22,6 +22,6 @@ push-to-releases:
           username: $DOCKER_USERNAME
           password: $DOCKER_PASSWORD
           repository: $DOCKER_REPO
-          registry: https://iad.ocir.io/v3
+          registry: https://iad.ocir.io/v2
       
     
