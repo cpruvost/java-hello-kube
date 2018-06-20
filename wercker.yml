@@ -27,7 +27,7 @@ push-to-releases:
 deploy-to-oke:
   box:
         id: python:2.7
-        cmd: /bin/sh
+       
   steps:
     - bash-template
     
