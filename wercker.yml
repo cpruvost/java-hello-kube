@@ -27,8 +27,7 @@ push-to-releases:
 
 deploy-to-oke:
   box:
-        id: alpine
-        cmd: /bin/sh
+        id: python:2.7
   steps:
     - bash-template
     
