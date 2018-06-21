@@ -5,9 +5,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: java-hello-kube
+  name: javahellokube
   labels:
-    run: java-hello-kube
+    run: javahellokube
 spec:
   replicas: 1
   strategy:
@@ -18,12 +18,12 @@ spec:
   template:
     metadata:
       labels:
-        run: java-hello-kube
+        run: javahellokube
     spec:
       containers:
       - image: wcr.io/$WERCKER_APPLICATION_OWNER_NAME/$WERCKER_APPLICATION_NAME:$WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
         imagePullPolicy: Always
-        name: java-hello-kube
+        name: javahellokube
         ports:
         - containerPort: 8090
           protocol: TCP
@@ -34,10 +34,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: java-hello-kube-svc
+  name: javahellokubesvc
 spec:
   selector:
-    run: java-hello-kube
+    run: javahellokube
   ports:
     - port: 8088
       targetPort: 8090
