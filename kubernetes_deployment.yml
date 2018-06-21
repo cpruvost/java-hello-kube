@@ -23,7 +23,7 @@ spec:
       - name: javahellokubeserver
         image: ${DOCKER_REPO}:${WERCKER_GIT_COMMIT}
         ports:
-        - name: javahellokubeserver
+        - name: javahellokubesr
           containerPort: 8080
           protocol: TCP
       imagePullSecrets:
