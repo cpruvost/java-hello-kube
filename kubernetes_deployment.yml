@@ -20,10 +20,10 @@ spec:
         commit: ${WERCKER_GIT_COMMIT}
     spec:
       containers:
-      - name: javahellokubeserver
+      - name: javahlserver
         image: ${DOCKER_REPO}:${WERCKER_GIT_COMMIT}
         ports:
-        - name: javahellokubesr
+        - name: javahlserver
           containerPort: 8080
           protocol: TCP
       imagePullSecrets:
