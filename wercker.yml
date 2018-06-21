@@ -24,7 +24,7 @@ push-to-releases:
           repository: $DOCKER_REPO
           registry: https://iad.ocir.io/v2
  
-deploy-to-kubernetes:
+deploy-to-oke:
     box: python:2.7
     steps:
 
