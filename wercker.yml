@@ -24,56 +24,44 @@ push-to-releases:
           repository: $DOCKER_REPO
           registry: https://iad.ocir.io/v2
  
+deploy-to-kubernetes:
+    box: python:2.7
+    steps:
 
-deploy-to-oke:
-  box:
-        id: python:2.7
-  steps:
+    # https://github.com/wercker/step-bash-template
+    # This Wercker step will look for files in our repo with a .template extension.
+    # It will expand any environment variables in those files, then remove the
+    # template extension.
     - bash-template
-    
-    - script:
-        name: "Visualise Kubernetes config"
-        code: cat kubernetes-deployment.yml
-        
-    - script:
-        name: wait to delete namespace
-        code: sleep 30
-        
-    - kubectl:
-        name: create namespace    
-        server: $KUBERNETES_MASTER
-        token: $KUBERNETES_TOKEN
-        insecure-skip-tls-verify: true
-        command: create namespace $WERCKER_APPLICATION_OWNER_NAME
-        
-    - kubectl:
-        name: create OCR secret
-        server: $KUBERNETES_MASTER
-        token: $KUBERNETES_TOKEN
-        insecure-skip-tls-verify: true
-        command: create secret docker-registry wrelease --docker-server=iad.ocir.io --docker-username=$WERCKER_APPLICATION_OWNER_NAME --docker-password=$KUBERNETES_TOKEN --docker-email=${WERCKER_APPLICATION_OWNER_NAME}@mail.com --namespace=$WERCKER_APPLICATION_OWNER_NAME
-        
-    - kubectl:
-        name: create deplyoment
-        server: $KUBERNETES_MASTER
-        token: $KUBERNETES_TOKEN
-        insecure-skip-tls-verify: true
-        command: create -f $WERCKER_ROOT/kubernetes-deployment.yml --namespace=$WERCKER_APPLICATION_OWNER_NAME
 
+    # The step above should leave us with a Kubernetes service and deployment yml files.
+    # We'll create a directory to move them to.
     - script:
-        name: "Visualise Ingress config"
-        code: cat ingress.yml
-
+        name: Prepare Kubernetes files
+        code: |
+          mkdir $WERCKER_OUTPUT_DIR/kubernetes
+          mv kubernetes_*.yml $WERCKER_OUTPUT_DIR/kubernetes
+    # `apply` is a good command to use here, as it'll create Kubernetes entities if they are missing.
     - kubectl:
-        name: create Ingress configuration
-        server: $KUBERNETES_MASTER
-        token: $KUBERNETES_TOKEN
+        name: deploy to kubernetes
+        server: $OKE_MASTER
+        token: $OKE_TOKEN
         insecure-skip-tls-verify: true
-        command: create -f $WERCKER_ROOT/ingress.yml --namespace=$WERCKER_APPLICATION_OWNER_NAME
+        command: apply -f $WERCKER_OUTPUT_DIR/kubernetes/
 
+    # Tell Kubernetes that we're going to wait 60 seconds for the deploy to be successful
     - kubectl:
-        name: get LoadBalancer public IP address
-        server: $KUBERNETES_MASTER
-        token: $KUBERNETES_TOKEN
+        name: set deployment timeout
+        server: $OKE_MASTER
+        token: $OKE_TOKEN
         insecure-skip-tls-verify: true
-        command: get svc -o jsonpath='{.items[*].status.loadBalancer.ingress[*].ip}' --all-namespaces 
+        command: patch deployment/java-hello-kube -p '{"spec":{"progressDeadlineSeconds":60}}'
+
+    # Watch the Kubernetes deployment. Once the pods are considered healthy the step will exit 0
+    # If they aren't healthy within 60 seconds, it will exit with a non 0 exit code, and cause the run to fail.
+    - kubectl:
+        name: check deployment status
+        server: $OKE_MASTER
+        token: $OKE_TOKEN
+        insecure-skip-tls-verify: true
+        command: rollout status deployment/java-hello-kube
