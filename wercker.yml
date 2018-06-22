@@ -55,7 +55,7 @@ deploy-to-oke:
         server: $OKE_MASTER
         token: $OKE_TOKEN
         insecure-skip-tls-verify: true
-        command: patch deployment/javahellokube -p '{"spec":{"progressDeadlineSeconds":60}}'
+        command: patch deployment/MyJHK -p '{"spec":{"progressDeadlineSeconds":60}}'
 
     # Watch the Kubernetes deployment. Once the pods are considered healthy the step will exit 0
     # If they aren't healthy within 60 seconds, it will exit with a non 0 exit code, and cause the run to fail.
@@ -64,4 +64,4 @@ deploy-to-oke:
         server: $OKE_MASTER
         token: $OKE_TOKEN
         insecure-skip-tls-verify: true
-        command: rollout status deployment/javahellokube
+        command: rollout status deployment/MyJHK

@@ -5,25 +5,25 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: javahellokube
+  name: MyJHK
   labels:
     commit: ${WERCKER_GIT_COMMIT}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: javahellokube
+      app: MyJHK
   template:
     metadata:
       labels:
-        app: javahellokube
+        app: MyJHK
         commit: ${WERCKER_GIT_COMMIT}
     spec:
       containers:
-      - name: javahlserver
+      - name: MyJHKServer
         image: ${DOCKER_REPO}:${WERCKER_GIT_COMMIT}
         ports:
-        - name: javahlserver
+        - name: MyJHKServer
           containerPort: 8080
           protocol: TCP
       imagePullSecrets:
