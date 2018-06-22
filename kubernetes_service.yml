@@ -5,15 +5,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: MyJHK
+  name: my-jhk-service
   labels:
-    app: MyJHK
+    app: my-jhk
     commit: ${WERCKER_GIT_COMMIT}
 spec:
   ports:
   - port: 80
-    targetPort: 8080
+    targetPort: 8090
   selector:
-    app: MyJHK
+    app: my-jhk
     commit: ${WERCKER_GIT_COMMIT}
   type: LoadBalancer

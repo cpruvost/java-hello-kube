@@ -5,26 +5,26 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: MyJHK
+  name: my-jhk-deploy
   labels:
     commit: ${WERCKER_GIT_COMMIT}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: MyJHK
+      app: my-jhk
   template:
     metadata:
       labels:
-        app: MyJHK
+        app: my-jhk
         commit: ${WERCKER_GIT_COMMIT}
     spec:
       containers:
-      - name: MyJHKServer
+      - name: my-jhk-server
         image: ${DOCKER_REPO}:${WERCKER_GIT_COMMIT}
         ports:
-        - name: MyJHKServer
-          containerPort: 8080
+        - name: my-jhk-port
+          containerPort: 8090
           protocol: TCP
       imagePullSecrets:
       - name:  ${OKE_IMAGESECRET}

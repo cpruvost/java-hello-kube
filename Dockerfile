@@ -27,6 +27,7 @@ RUN mkdir -p /pipeline/source
 WORKDIR /pipeline/source
 
 COPY --from=build /pipeline/source/target/rest-example-0.2.0.jar /pipeline/source/rest-example-0.2.0.jar
+CMD java -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -jar /pipeline/source/rest-example-0.2.0.jar
 
 EXPOSE 8090
 
