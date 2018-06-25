@@ -18,7 +18,7 @@ push-to-releases:
           cmd: java -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -jar ./target/rest-example-0.2.0.jar
           working-dir: $WERCKER_ROOT
           tag: $WERCKER_GIT_COMMIT
-          ports: "8080"
+          ports: "8090"
           username: $DOCKER_USERNAME
           password: $DOCKER_PASSWORD
           repository: $DOCKER_REPO
