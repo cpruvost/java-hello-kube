@@ -15,7 +15,7 @@ push-to-releases:
             java -version
     # Push to the private docker Container Registry (OCIR)
     - internal/docker-push:
-          cmd: java -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -jar ./target/rest-example-0.2.0.jar
+          cmd: java -jar ./target/rest-example-0.2.0.jar
           working-dir: $WERCKER_ROOT
           #tag: $WERCKER_GIT_COMMIT
           tag: latest
