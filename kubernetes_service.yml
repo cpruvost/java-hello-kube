@@ -8,12 +8,12 @@ metadata:
   name: my-jhk-service
   labels:
     app: my-jhk
-    #commit: ${WERCKER_GIT_COMMIT}
+    commit: ${WERCKER_GIT_COMMIT}
 spec:
   ports:
   - port: 80
     targetPort: 8090
   selector:
     app: my-jhk
-    #commit: ${WERCKER_GIT_COMMIT}
+    commit: ${WERCKER_GIT_COMMIT}
   type: LoadBalancer

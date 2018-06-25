@@ -6,8 +6,8 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: my-jhk-deploy
-  #labels:
-    #commit: ${WERCKER_GIT_COMMIT}
+  labels:
+    commit: ${WERCKER_GIT_COMMIT}
 spec:
   replicas: 1
   selector:
@@ -17,15 +17,14 @@ spec:
     metadata:
       labels:
         app: my-jhk
-        #commit: ${WERCKER_GIT_COMMIT}
+        commit: ${WERCKER_GIT_COMMIT}
     spec:
       containers:
       - name: my-jhk-server
-        #image: ${DOCKER_REPO}:${WERCKER_GIT_COMMIT}
-        image : iad.ocir.io/gse00014392/cpruvost
+        image: iad.ocir.io/gse00014392/cpruvost:latest
         ports:
         - name: my-jhk-port
           containerPort: 8090
           protocol: TCP
       imagePullSecrets:
-      - name:  ${OKE_IMAGESECRET}
+      - name: regcred
