@@ -22,7 +22,8 @@ spec:
       containers:
       - name: my-jhk-server
         #image: ${DOCKER_REPO}:${WERCKER_GIT_COMMIT}
-        image : ${DOCKER_REPO}:latest
+        #image : ${DOCKER_REPO}:latest
+        image : 
         ports:
         - name: my-jhk-port
           containerPort: 8090
