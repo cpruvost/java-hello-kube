@@ -7,7 +7,8 @@ kind: Deployment
 metadata:
   name: my-jhk-deploy
   labels:
-    commit: ${WERCKER_GIT_COMMIT}
+    #commit: ${WERCKER_GIT_COMMIT}
+    app: my-jhk
 spec:
   replicas: 1
   selector:
@@ -17,7 +18,7 @@ spec:
     metadata:
       labels:
         app: my-jhk
-        commit: ${WERCKER_GIT_COMMIT}
+        #commit: ${WERCKER_GIT_COMMIT}
     spec:
       containers:
       - name: my-jhk-server
