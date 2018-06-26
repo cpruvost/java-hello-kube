@@ -1,5 +1,16 @@
 box: cpruvost/java-hello-kube
 
+dev:
+  steps:
+    - script:
+        name: mvn package
+        code: |
+          mvn clean package
+          
+    - internal/watch:
+        code: java -jar ./target/rest-example-0.2.0.jar
+        reload: true
+
 build:
   steps:
     - script:
