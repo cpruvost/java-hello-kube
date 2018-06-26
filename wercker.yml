@@ -6,6 +6,12 @@ build:
         name: mvn package
         code: |
           mvn clean package
+   
+  after-steps:
+        - slack-notifier:
+            url: $SLACK_URL
+            channel: devops
+            username: werckerbot
     
 push-to-releases:
   steps:
