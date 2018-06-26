@@ -31,6 +31,12 @@ push-to-releases:
           password: $DOCKER_PASSWORD
           repository: $DOCKER_REPO
           registry: https://iad.ocir.io/v2
+         
+  after-steps:
+        - slack-notifier:
+            url: $SLACK_URL
+            channel: devops
+            username: werckerbot
  
 deploy-to-oke:
     box: python:2.7
@@ -82,3 +88,9 @@ deploy-to-oke:
         token: $OKE_TOKEN
         insecure-skip-tls-verify: true
         command: rollout status deployment/my-jhk-deploy
+        
+    after-steps:
+        - slack-notifier:
+            url: $SLACK_URL
+            channel: devops
+            username: werckerbot
