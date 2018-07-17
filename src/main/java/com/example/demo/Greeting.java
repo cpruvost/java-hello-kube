@@ -14,6 +14,6 @@ public class Greeting {
 	//Service REST Demo
 	@RequestMapping(value = "/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public @ResponseBody String greeting(@PathVariable(value = "name") String name) {
-		return "Hello Michelin " + name;
+		return "Hello Michelin V3 " + name;
 	}
 }
