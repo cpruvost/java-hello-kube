@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: my-jhk-server
-        image: iad.ocir.io/gse00014392/cpruvost:latest
+        image: iad.ocir.io/gse00014392/cpruvost/java-hello-kube-ms:latest
         ports:
         - name: my-jhk-port
           containerPort: 8090
